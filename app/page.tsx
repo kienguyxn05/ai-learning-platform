@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function HomePage() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-6 py-12 text-center">
@@ -16,6 +18,14 @@ export default function HomePage() {
       <p className="text-lg sm:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl mb-10 leading-relaxed">
         Nền tảng học tập cá nhân hóa với trợ lý AI Tutor, hệ thống câu hỏi Quiz tự động và theo dõi tiến độ học tập thông minh.
       </p>
+
+      {/* Nút CTA — điều hướng đến trang danh sách khóa học */}
+      <Link
+        href="/courses"
+        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white text-sm font-semibold rounded-lg hover:bg-blue-700 transition-colors mb-10"
+      >
+        Khám phá khóa học →
+      </Link>
 
       {/* Các tính năng cốt lõi (Kiến trúc theo Phase) */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl w-full text-left mt-4">
