@@ -6,13 +6,22 @@
  */
 
 import { isSupabaseConfigured, createClient } from "@/lib/supabase/server";
+import { fetchCoursesFromSpring, fetchCourseDetailFromSpring, fetchLessonFromSpring } from "@/lib/api/spring-client";
 import * as mockData from "@/lib/mock-data";
 import type { Course, Module, Lesson } from "@/types";
 
 /**
  * Lấy danh sách tất cả các khóa học
+ * Thứ tự ưu tiên: Spring Boot Backend (Java) -> Supabase Direct -> Mock Data
  */
 export async function getCourses(): Promise<Course[]> {
+  // 1. Thử gọi Spring Boot Backend nếu đang chạy
+  const springCourses = await fetchCoursesFromSpring();
+  if (springCourses && springCourses.length > 0) {
+    return springCourses;
+  }
+
+  // 2. Nếu không có Spring Boot, dùng Supabase trực tiếp
   if (!isSupabaseConfigured()) {
     return mockData.getCourses();
   }
