@@ -1,81 +1,52 @@
-# AI Learning Platform
+# 🚀 AI Learning Platform (Fullstack Monorepo)
 
-An AI-powered personalized learning platform built from scratch with Next.js App Router, TypeScript, and Tailwind CSS.
-
----
-
-## 🚀 Main Goal
-
-The platform enables students to:
-- Browse courses through a structured hierarchy: **Course → Module → Lesson**.
-- Watch lesson videos and follow lesson transcripts and notes.
-- Track completed lessons and view overall learning progress.
-- Ask an **AI Tutor** context-aware questions grounded directly in lesson content.
-- Take **AI Quizzes** generated from lesson notes with deterministic score calculation.
-- Search course material using semantic AI search.
+Nền tảng học tập cá nhân hóa ứng dụng AI với kiến trúc **Next.js (Frontend)** + **Spring Boot (Backend)** + **Supabase PostgreSQL (Database)**.
 
 ---
 
-## 🛠️ Technology Stack
-
-- **Framework**: [Next.js](https://nextjs.org/) (App Router, Server Components)
-- **UI Library**: [React 19](https://react.dev/)
-- **Language**: [TypeScript](https://www.typescriptlang.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Database (Phase 3)**: Supabase PostgreSQL
-- **AI Integration (Phase 6-8)**: OpenAI API (Server-side Route Handlers)
-
----
-
-## 📂 Project Structure
+## 📁 Cấu trúc thư mục (Monorepo Architecture)
 
 ```text
 ai-learning-platform/
-├── app/                  # Next.js App Router (pages, layouts, route handlers)
-│   ├── layout.tsx        # Root layout (HTML shell, global fonts, metadata)
-│   ├── page.tsx          # Home page
-│   └── globals.css       # Global styling & Tailwind directives
-├── components/           # Reusable React components
-│   ├── course/           # Course cards, lists, outlines
-│   ├── lesson/           # Video player, lesson notes, transcripts
-│   ├── tutor/            # AI Tutor chat interface
-│   ├── quiz/             # Quiz UI and question cards
-│   └── ui/               # Generic UI atoms (buttons, badges, inputs)
-├── lib/                  # Utilities, database clients, and helper functions
-│   └── utils.ts          # Common formatting and helper utilities
-├── types/                # TypeScript type definitions and domain models
-│   └── index.ts          # Core entity types (Course, Module, Lesson, etc.)
-├── public/               # Static assets (images, icons)
-├── PROJECT_CONTEXT.md    # Master architecture and implementation specification
-└── README.md             # Project documentation
+│
+├── 🌐 frontend/              # Ứng dụng Next.js 16 + React 19 + Tailwind CSS
+│   ├── app/                  # Routing theo App Router (/, /courses, /lessons)
+│   ├── components/           # UI Components (CourseCard, LessonList...)
+│   ├── lib/                  # Data Access Layer & API Clients
+│   └── types/                # TypeScript Domain & Database Types
+│
+├── ☕ backend/               # Ứng dụng Spring Boot 3 / 4 (Java 21 LTS)
+│   ├── src/main/java/        # 4 tầng: Entity -> Repository -> Service -> Controller
+│   └── pom.xml               # Quản lý thư viện Maven (Spring Web, JPA, PostgreSQL)
+│
+└── 🗄️ supabase/              # Cơ sở dữ liệu PostgreSQL
+    ├── schema.sql            # Bản thiết kế bảng, khóa ngoại, RLS, Index
+    └── seed.sql              # Dữ liệu mẫu ban đầu
 ```
 
 ---
 
-## 🏁 Getting Started
+## 🛠️ Hướng dẫn khởi chạy dự án
 
-### 1. Install dependencies
+### 1. Chạy Frontend (Next.js)
 ```bash
+cd frontend
 npm install
-```
-
-### 2. Run the development server
-```bash
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+Trang web sẽ chạy tại: **`http://localhost:3000`**
 
 ---
 
-## 🗺️ Development Roadmap
+### 2. Chạy Backend (Spring Boot)
+Yêu cầu: Máy đã cài đặt JDK 21 LTS.
+```bash
+cd backend
+.\mvnw.cmd spring-boot:run
+```
+REST API Backend sẽ chạy tại: **`http://localhost:8080`**
 
-- [x] **Day 1**: Project Foundation (Next.js, TypeScript, Tailwind CSS, App Router)
-- [ ] **Phase 2**: Course / Module / Lesson navigation using mock data
-- [ ] **Phase 3**: Supabase PostgreSQL database integration
-- [ ] **Phase 4**: User Authentication
-- [ ] **Phase 5**: Learning Progress tracking
-- [ ] **Phase 6**: AI Tutor integration (Server-side OpenAI API)
-- [ ] **Phase 7**: AI Quiz generator and scoring
-- [ ] **Phase 8**: Semantic Search & RAG
-- [ ] **Phase 9**: Personalized Recommendations
+Các Endpoint REST API có sẵn:
+- `GET http://localhost:8080/api/courses`: Danh sách tất cả khóa học
+- `GET http://localhost:8080/api/courses/{slug}`: Chi tiết khóa học kèm modules và bài học
+- `GET http://localhost:8080/api/lessons/{slug}`: Chi tiết bài học
