@@ -19,7 +19,7 @@
  */
 
 import { Metadata } from "next";
-import { getCourses } from "@/lib/mock-data";
+import { getCourses } from "@/lib/courses";
 import CourseCard from "@/components/course/CourseCard";
 
 export const metadata: Metadata = {
@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   description: "Khám phá các khóa học với hệ thống AI Tutor và Quiz thông minh.",
 };
 
-export default function CoursesPage() {
-  const courses = getCourses();
+export default async function CoursesPage() {
+  const courses = await getCourses();
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-12">

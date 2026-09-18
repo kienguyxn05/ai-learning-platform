@@ -32,7 +32,7 @@ import {
   getCourseBySlug,
   getModulesByCourseId,
   getLessonsByModuleId,
-} from "@/lib/mock-data";
+} from "@/lib/courses";
 import LessonList from "@/components/course/LessonList";
 
 export default async function CourseDetailPage({
@@ -44,7 +44,7 @@ export default async function CourseDetailPage({
   const { slug } = await params;
 
   // Tìm khóa học theo slug
-  const course = getCourseBySlug(slug);
+  const course = await getCourseBySlug(slug);
 
   // Nếu không tìm thấy → hiển thị trang 404
   if (!course) {
@@ -52,7 +52,15 @@ export default async function CourseDetailPage({
   }
 
   // Lấy danh sách modules của khóa học này
-  const modules = getModulesByCourseId(course.id);
+  const modules = await getModulesByCourseId(course.id);
+
+  // Lấy đồng thời tất cả bài học cho từng module bằng Promise.all
+  const modulesWithLessons = await Promise.all(
+    modules.map(async (mod) => {
+      const lessons = await getLessonsByModuleId(mod.id);
+      return { ...mod, lessons };
+    })
+  );
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-12">
@@ -85,31 +93,27 @@ export default async function CourseDetailPage({
         </h2>
 
         <div className="space-y-6">
-          {modules.map((mod) => {
-            const moduleLessons = getLessonsByModuleId(mod.id);
-
-            return (
-              <div
-                key={mod.id}
-                className="rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden"
-              >
-                {/* Header module */}
-                <div className="px-5 py-4 bg-neutral-50 dark:bg-neutral-800/50 border-b border-neutral-200 dark:border-neutral-800">
-                  <h3 className="font-semibold">
-                    Module {mod.position}: {mod.title}
-                  </h3>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
-                    {moduleLessons.length} bài học
-                  </p>
-                </div>
-
-                {/* Danh sách bài học */}
-                <div className="p-2">
-                  <LessonList lessons={moduleLessons} />
-                </div>
+          {modulesWithLessons.map((mod) => (
+            <div
+              key={mod.id}
+              className="rounded-xl border border-neutral-200 dark:border-neutral-800 overflow-hidden"
+            >
+              {/* Header module */}
+              <div className="px-5 py-4 bg-neutral-50 dark:bg-neutral-800/50 border-b border-neutral-200 dark:border-neutral-800">
+                <h3 className="font-semibold">
+                  Module {mod.position}: {mod.title}
+                </h3>
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-0.5">
+                  {mod.lessons.length} bài học
+                </p>
               </div>
-            );
-          })}
+
+              {/* Danh sách bài học */}
+              <div className="p-2">
+                <LessonList lessons={mod.lessons} />
+              </div>
+            </div>
+          ))}
         </div>
       </section>
     </main>

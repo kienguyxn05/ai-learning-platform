@@ -21,7 +21,7 @@ import {
   getLessonBySlug,
   getModuleById,
   getCourseById,
-} from "@/lib/mock-data";
+} from "@/lib/courses";
 import { formatDuration } from "@/lib/utils";
 
 export default async function LessonPage({
@@ -32,16 +32,16 @@ export default async function LessonPage({
   const { slug } = await params;
 
   // Bước 1: Tìm bài học
-  const lesson = getLessonBySlug(slug);
+  const lesson = await getLessonBySlug(slug);
   if (!lesson) {
     notFound();
   }
 
   // Bước 2: Tìm module chứa bài học (để lấy tên module và courseId)
-  const lessonModule = getModuleById(lesson.moduleId);
+  const lessonModule = await getModuleById(lesson.moduleId);
 
   // Bước 3: Tìm khóa học (để tạo breadcrumb và link quay lại)
-  const course = lessonModule ? getCourseById(lessonModule.courseId) : undefined;
+  const course = lessonModule ? await getCourseById(lessonModule.courseId) : undefined;
 
   return (
     <main className="max-w-4xl mx-auto px-6 py-12">
