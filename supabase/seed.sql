@@ -1,5 +1,5 @@
 -- ============================================================
--- AI Learning Platform — Seed Data
+-- AI Learning Platform — Seed Data (Chuẩn UUID hex 0-9, a-f)
 -- ============================================================
 
 -- 1. Xóa dữ liệu cũ nếu muốn reset (theo thứ tự quan hệ từ con đến cha)
@@ -12,14 +12,14 @@ DELETE FROM categories;
 
 -- 2. Thêm Categories
 INSERT INTO categories (id, name, slug, description) VALUES
-  ('c1111111-1111-1111-1111-111111111111', 'Toán học cho AI', 'mathematics-for-ai', 'Nền tảng toán học thiết yếu cho Machine Learning và Deep Learning'),
-  ('c2222222-2222-2222-2222-222222222222', 'Machine Learning cơ bản', 'machine-learning-basics', 'Các thuật toán học máy cổ điển và phương pháp đánh giá mô hình');
+  ('a0000000-0000-0000-0000-000000000001', 'Toán học cho AI', 'mathematics-for-ai', 'Nền tảng toán học thiết yếu cho Machine Learning và Deep Learning'),
+  ('a0000000-0000-0000-0000-000000000002', 'Machine Learning cơ bản', 'machine-learning-basics', 'Các thuật toán học máy cổ điển và phương pháp đánh giá mô hình');
 
 -- 3. Thêm Courses
 INSERT INTO courses (id, category_id, title, slug, description, thumbnail_url, level) VALUES
   (
-    'a1111111-1111-1111-1111-111111111111',
-    'c1111111-1111-1111-1111-111111111111',
+    'b0000000-0000-0000-0000-000000000001',
+    'a0000000-0000-0000-0000-000000000001',
     'Linear Algebra for Machine Learning',
     'linear-algebra',
     'Nắm vững đại số tuyến tính: vector, ma trận, định thức, không gian vector và tích vô hướng — nền móng cốt lõi cho mọi mô hình AI.',
@@ -27,8 +27,8 @@ INSERT INTO courses (id, category_id, title, slug, description, thumbnail_url, l
     'beginner'
   ),
   (
-    'a2222222-2222-2222-2222-222222222222',
-    'c1111111-1111-1111-1111-111111111111',
+    'b0000000-0000-0000-0000-000000000002',
+    'a0000000-0000-0000-0000-000000000001',
     'Calculus & Optimization for Deep Learning',
     'calculus',
     'Hiểu sâu về đạo hàm, gradient, đạo hàm riêng và thuật toán Gradient Descent tối ưu hóa trọng số mạng nơ-ron.',
@@ -36,18 +36,18 @@ INSERT INTO courses (id, category_id, title, slug, description, thumbnail_url, l
     'intermediate'
   );
 
--- 4. Thêm Modules cho Linear Algebra
+-- 4. Thêm Modules
 INSERT INTO modules (id, course_id, title, position) VALUES
-  ('m1111111-1111-1111-1111-111111111111', 'a1111111-1111-1111-1111-111111111111', 'Vectors and Spaces', 1),
-  ('m2222222-2222-2222-2222-222222222222', 'a1111111-1111-1111-1111-111111111111', 'Matrix Transformations', 2),
-  ('m3333333-3333-3333-3333-333333333333', 'a2222222-2222-2222-2222-222222222222', 'Derivatives & Rates of Change', 1),
-  ('m4444444-4444-4444-4444-444444444444', 'a2222222-2222-2222-2222-222222222222', 'Gradient Descent & Optimization', 2);
+  ('c0000000-0000-0000-0000-000000000001', 'b0000000-0000-0000-0000-000000000001', 'Vectors and Spaces', 1),
+  ('c0000000-0000-0000-0000-000000000002', 'b0000000-0000-0000-0000-000000000001', 'Matrix Transformations', 2),
+  ('c0000000-0000-0000-0000-000000000003', 'b0000000-0000-0000-0000-000000000002', 'Derivatives & Rates of Change', 1),
+  ('c0000000-0000-0000-0000-000000000004', 'b0000000-0000-0000-0000-000000000002', 'Gradient Descent & Optimization', 2);
 
 -- 5. Thêm Lessons
 INSERT INTO lessons (id, module_id, title, slug, description, video_url, transcript, notes, duration_seconds, position) VALUES
   (
-    'l1111111-1111-1111-1111-111111111111',
-    'm1111111-1111-1111-1111-111111111111',
+    'd0000000-0000-0000-0000-000000000001',
+    'c0000000-0000-0000-0000-000000000001',
     'Introduction to Vectors',
     'introduction-to-vectors',
     'Khái niệm cơ bản về vector trong không gian 2D và 3D, biểu diễn hình học và đại số.',
@@ -58,8 +58,8 @@ INSERT INTO lessons (id, module_id, title, slug, description, video_url, transcr
     1
   ),
   (
-    'l2222222-2222-2222-2222-222222222222',
-    'm1111111-1111-1111-1111-111111111111',
+    'd0000000-0000-0000-0000-000000000002',
+    'c0000000-0000-0000-0000-000000000001',
     'Dot Product & Angles',
     'dot-product-and-angles',
     'Tích vô hướng giữa hai vector, ý nghĩa hình học và công thức tính góc cosin.',
@@ -70,8 +70,8 @@ INSERT INTO lessons (id, module_id, title, slug, description, video_url, transcr
     2
   ),
   (
-    'l3333333-3333-3333-3333-333333333333',
-    'm2222222-2222-2222-2222-222222222222',
+    'd0000000-0000-0000-0000-000000000003',
+    'c0000000-0000-0000-0000-000000000002',
     'Matrices as Linear Transforms',
     'matrices-as-linear-transforms',
     'Xem ma trận như một phép biến đổi không gian: xoay, co giãn, kéo nghiêng.',
@@ -82,8 +82,8 @@ INSERT INTO lessons (id, module_id, title, slug, description, video_url, transcr
     1
   ),
   (
-    'l4444444-4444-4444-4444-444444444444',
-    'm3333333-3333-3333-3333-333333333333',
+    'd0000000-0000-0000-0000-000000000004',
+    'c0000000-0000-0000-0000-000000000003',
     'The Concept of Derivative',
     'concept-of-derivative',
     'Ý nghĩa hình học của đạo hàm: hệ số góc của tiếp tuyến và tốc độ biến thiên tức thời.',
